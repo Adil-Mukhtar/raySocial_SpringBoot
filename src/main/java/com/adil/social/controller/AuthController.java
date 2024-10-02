@@ -75,6 +75,7 @@ public class AuthController {
 
         return res;
     }
+    //
 
     private Authentication authenticate(String email, String password){
         UserDetails userDetails = customUserDetails.loadUserByUsername(email);
