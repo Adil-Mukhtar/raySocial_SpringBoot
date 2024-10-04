@@ -1,6 +1,7 @@
 package com.adil.social.service;
 
 import com.adil.social.config.JwtProvider;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.User;
 import com.adil.social.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,14 +32,14 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User findUserById(Integer userId) throws Exception {
+    public User findUserById(Integer userId) throws UserException {
 
         Optional<User> user = userRepository.findById(userId);
 
         if(user.isPresent()){
             return user.get();
         }
-        throw new Exception("User does not exist with id: " + userId);
+        throw new UserException("User does not exist with id: " + userId);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User followUser(Integer reqUserId, Integer userId2) throws Exception {
+    public User followUser(Integer reqUserId, Integer userId2) throws UserException {
 
         User reqUser = findUserById(reqUserId);
         User user2 = findUserById(userId2);
@@ -63,11 +64,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User updateUser(User user, Integer userId) throws Exception {
+    public User updateUser(User user, Integer userId) throws UserException {
         Optional<User> user1 = userRepository.findById(userId);
 
         if(user1.isEmpty()){
-            throw new Exception("User does not exist with id: " + userId);
+            throw new UserException("User does not exist with id: " + userId);
         }
 
         User oldUser = user1.get();

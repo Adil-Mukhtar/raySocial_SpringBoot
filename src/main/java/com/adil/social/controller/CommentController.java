@@ -1,6 +1,8 @@
 package com.adil.social.controller;
 
 
+import com.adil.social.exceptions.CommentException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Comment;
 import com.adil.social.service.CommentService;
 import com.adil.social.service.UserService;
@@ -21,7 +23,7 @@ public class CommentController {
 
     @PostMapping("/api/comments/post/{postId}")
     public Comment createComment(@PathVariable Integer postId,
-                                 @RequestBody Comment comment, @RequestHeader("Authorization") String jwt) throws Exception {
+                                 @RequestBody Comment comment, @RequestHeader("Authorization") String jwt) throws CommentException, UserException {
 
         User user = userService.findUserByJwt(jwt);
 
@@ -32,7 +34,7 @@ public class CommentController {
 
     @PutMapping("/api/comments/like/{commentId}")
     public Comment likeComment(@PathVariable Integer commentId,
-                               @RequestHeader("Authorization") String jwt) throws Exception {
+                               @RequestHeader("Authorization") String jwt) throws CommentException, UserException {
 
         User user = userService.findUserByJwt(jwt);
 
@@ -42,7 +44,7 @@ public class CommentController {
     }
 
     @GetMapping("/api/comments/{commentId}")
-    public Comment findCommentById(@PathVariable Integer commentId) throws Exception {
+    public Comment findCommentById(@PathVariable Integer commentId) throws CommentException {
 
         Comment comment = commentService.findCommentById(commentId);
 
@@ -50,7 +52,7 @@ public class CommentController {
     }
 
     @GetMapping("/api/comments")
-    public List<Comment> findAllComments() throws Exception {
+    public List<Comment> findAllComments() throws CommentException {
         List<Comment> comments = commentService.getAllComments();
         return comments;
     }

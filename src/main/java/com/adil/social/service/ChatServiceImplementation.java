@@ -1,5 +1,6 @@
 package com.adil.social.service;
 
+import com.adil.social.exceptions.ChatException;
 import com.adil.social.models.Chat;
 import com.adil.social.models.User;
 import com.adil.social.repository.ChatRepository;
@@ -38,12 +39,12 @@ public class ChatServiceImplementation implements ChatService {
 
 
     @Override
-    public Chat findChatById(Integer chatId) throws Exception{
+    public Chat findChatById(Integer chatId) throws ChatException {
 
         Optional<Chat> opt = chatRepository.findById(chatId);
 
         if(opt.isEmpty()){
-            throw new Exception("chat not found with id: "+ chatId);
+            throw new ChatException("chat not found with id: "+ chatId);
         }
 
         return opt.get();

@@ -1,5 +1,7 @@
 package com.adil.social.service;
 
+import com.adil.social.exceptions.ReelsException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Reels;
 import com.adil.social.models.User;
 
@@ -11,5 +13,5 @@ public interface ReelsService {
 
     public List<Reels> findAllReels();
 
-    public List<Reels> findUsersReels(Integer userId) throws Exception;
+    public List<Reels> findUsersReels(Integer userId) throws ReelsException, UserException;
 }

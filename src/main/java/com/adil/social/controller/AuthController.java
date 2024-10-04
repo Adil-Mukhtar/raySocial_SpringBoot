@@ -2,6 +2,7 @@ package com.adil.social.controller;
 
 
 import com.adil.social.config.JwtProvider;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.User;
 import com.adil.social.repository.UserRepository;
 import com.adil.social.request.LoginRequest;
@@ -36,13 +37,13 @@ public class AuthController {
     private CustomUserDetailsService customUserDetails;
 
     @PostMapping("/signup")
-    public AuthResponse createUser(@RequestBody User user) throws Exception {
+    public AuthResponse createUser(@RequestBody User user) throws UserException {
 
         User isExist = userRepository.findByEmail(user.getEmail());
 
         //if user already exist with the provied email
         if(isExist != null){
-            throw new Exception("Email already in use by another account!");
+            throw new UserException("Email already in use by another account!");
         }
 
         User newUser = new User();

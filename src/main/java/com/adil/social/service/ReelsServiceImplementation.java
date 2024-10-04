@@ -1,6 +1,8 @@
 package com.adil.social.service;
 
 
+import com.adil.social.exceptions.ReelsException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Reels;
 import com.adil.social.models.User;
 import com.adil.social.repository.ReelsRepository;
@@ -36,7 +38,7 @@ public class ReelsServiceImplementation implements ReelsService {
     }
 
     @Override
-    public List<Reels> findUsersReels(Integer userId) throws Exception{
+    public List<Reels> findUsersReels(Integer userId) throws ReelsException, UserException {
 
         userService.findUserById(userId);
         return reelsRepository.findByUserId(userId);

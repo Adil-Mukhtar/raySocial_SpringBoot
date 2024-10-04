@@ -1,6 +1,8 @@
 package com.adil.social.service;
 
 
+import com.adil.social.exceptions.StoryException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Story;
 import com.adil.social.models.User;
 import com.adil.social.repository.StoryRepository;
@@ -34,7 +36,7 @@ public class StoryServiceImplementation implements StoryService {
 
 
     @Override
-    public List<Story> findStoryByUserId(Integer userId) throws Exception {
+    public List<Story> findStoryByUserId(Integer userId) throws StoryException, UserException {
         User user = userService.findUserById(userId);
         return storyRepository.findByUserId(userId);
     }

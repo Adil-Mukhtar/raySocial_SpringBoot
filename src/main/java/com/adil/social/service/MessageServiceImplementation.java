@@ -1,6 +1,7 @@
 package com.adil.social.service;
 
 
+import com.adil.social.exceptions.MessageException;
 import com.adil.social.models.Chat;
 import com.adil.social.models.Message;
 import com.adil.social.models.User;
@@ -27,7 +28,7 @@ public class MessageServiceImplementation implements MessageService {
 
 
     @Override
-    public Message createMessage(User user, Integer chatId, Message req) throws Exception{
+    public Message createMessage(User user, Integer chatId, Message req) throws MessageException {
 
 
 
@@ -49,7 +50,7 @@ public class MessageServiceImplementation implements MessageService {
     }
 
     @Override
-    public List<Message> findChatsMessages(Integer chatId) throws Exception{
+    public List<Message> findChatsMessages(Integer chatId) throws MessageException{
 
         Chat chat = chatService.findChatById(chatId);
         return messageRepository.findByChatId(chatId);

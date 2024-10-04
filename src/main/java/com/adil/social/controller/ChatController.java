@@ -1,6 +1,8 @@
 package com.adil.social.controller;
 
 
+import com.adil.social.exceptions.ChatException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Chat;
 import com.adil.social.models.User;
 import com.adil.social.request.CreateChatRequest;
@@ -22,7 +24,7 @@ public class ChatController {
 
     @PostMapping("/api/chats")
     public Chat createChat(@RequestHeader("Authorization") String jwt,
-                           @RequestBody CreateChatRequest req) throws Exception {
+                           @RequestBody CreateChatRequest req) throws ChatException, UserException {
 
         User reqUser = userService.findUserByJwt(jwt);
         User user2 = userService.findUserById(req.getUserId());
@@ -40,7 +42,7 @@ public class ChatController {
     }
 
     @GetMapping("/api/chats/{chatId}")
-    public Chat findChatByChatId(@PathVariable Integer chatId) throws Exception {
+    public Chat findChatByChatId(@PathVariable Integer chatId) throws ChatException {
 
         Chat chat = chatService.findChatById(chatId);
         return chat;

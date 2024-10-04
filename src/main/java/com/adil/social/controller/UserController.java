@@ -1,5 +1,6 @@
 package com.adil.social.controller;
 
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.User;
 
 import com.adil.social.repository.UserRepository;
@@ -27,21 +28,21 @@ public class UserController {
     }
 
     @GetMapping("/api/users/{userId}")
-    public User getUserById(@PathVariable("userId") Integer id) throws Exception{
+    public User getUserById(@PathVariable("userId") Integer id) throws UserException {
         User user = userRepository.findById(id).get();
         return user;
     }
 
 
     @PutMapping("/api/users")
-    public User updateUser(@RequestHeader("Authorization") String jwt, @RequestBody User user) throws Exception{
+    public User updateUser(@RequestHeader("Authorization") String jwt, @RequestBody User user) throws UserException{
         User reqUser = userService.findUserByJwt(jwt);
         User updatedUser = userService.updateUser(user, reqUser.getId());
         return updatedUser;
     }
 
     @PutMapping("/api/users/follow/{userId2}")
-    public User followUserHandler(@RequestHeader("Authorization") String jwt, @PathVariable Integer userId2) throws Exception {
+    public User followUserHandler(@RequestHeader("Authorization") String jwt, @PathVariable Integer userId2) throws UserException {
 
         User reqUser = userService.findUserByJwt(jwt);
         User user = userService.followUser(reqUser.getId(), userId2);

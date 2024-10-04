@@ -1,5 +1,6 @@
 package com.adil.social.controller;
 
+import com.adil.social.exceptions.MessageException;
 import com.adil.social.models.Message;
 import com.adil.social.models.User;
 import com.adil.social.service.MessageService;
@@ -24,7 +25,7 @@ public class MessageController {
     @PostMapping("/api/message/{chatId}")
     public Message createMessage(@RequestBody Message message,
                                  @RequestHeader("Authorization") String jwt,
-                                 @PathVariable Integer chatId) throws Exception {
+                                 @PathVariable Integer chatId) throws MessageException {
 
         User reqUser = userService.findUserByJwt(jwt);
         Message createdMessage = messageService.createMessage(reqUser, chatId, message);
@@ -32,7 +33,7 @@ public class MessageController {
     }
 
     @GetMapping("/api/message/{chatId}")
-    public List<Message> findChatMessages(@PathVariable Integer chatId) throws Exception {
+    public List<Message> findChatMessages(@PathVariable Integer chatId) throws MessageException {
 
         List<Message> messages = messageService.findChatsMessages(chatId);
         return messages;

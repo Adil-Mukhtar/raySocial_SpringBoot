@@ -1,5 +1,7 @@
 package com.adil.social.controller;
 
+import com.adil.social.exceptions.StoryException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Story;
 import com.adil.social.models.User;
 import com.adil.social.service.StoryService;
@@ -27,7 +29,7 @@ public class StoryController {
     }
 
     @GetMapping("/api/story/user/{userId}")
-    public List<Story> findStoryByUserId(@PathVariable Integer userId) throws Exception {
+    public List<Story> findStoryByUserId(@PathVariable Integer userId) throws StoryException, UserException {
 
         List<Story> stories = storyService.findStoryByUserId(userId);
         return stories;

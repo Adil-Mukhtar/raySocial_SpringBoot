@@ -1,6 +1,8 @@
 package com.adil.social.controller;
 
 
+import com.adil.social.exceptions.ReelsException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Reels;
 import com.adil.social.models.User;
 import com.adil.social.service.ReelsService;
@@ -35,7 +37,7 @@ public class ReelsController {
     }
 
     @GetMapping("/api/reels/user/{userId}")
-    public List<Reels> findUsersReels(@PathVariable Integer userId) throws Exception {
+    public List<Reels> findUsersReels(@PathVariable Integer userId) throws ReelsException, UserException {
 
         List<Reels> reels = reelsService.findUsersReels(userId);
         return reels;

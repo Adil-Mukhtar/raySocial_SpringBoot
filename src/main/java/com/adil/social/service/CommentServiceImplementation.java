@@ -1,6 +1,9 @@
 package com.adil.social.service;
 
 
+import com.adil.social.exceptions.CommentException;
+import com.adil.social.exceptions.PostException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Comment;
 import com.adil.social.models.Post;
 import com.adil.social.models.User;
@@ -29,7 +32,7 @@ public class CommentServiceImplementation implements CommentService {
     private PostRepository postRepository;
 
     @Override
-    public Comment createComment(Comment comment, Integer postId, Integer userId) throws Exception {
+    public Comment createComment(Comment comment, Integer postId, Integer userId) throws CommentException, UserException {
 
         User user = userService.findUserById(userId);
 
@@ -48,7 +51,7 @@ public class CommentServiceImplementation implements CommentService {
     }
 
     @Override
-    public Comment likeComment(Integer commentId, Integer userId) throws Exception {
+    public Comment likeComment(Integer commentId, Integer userId) throws CommentException, UserException {
 
         Comment comment = findCommentById(commentId);
         User user = userService.findUserById(userId);
@@ -64,18 +67,18 @@ public class CommentServiceImplementation implements CommentService {
     }
 
     @Override
-    public Comment findCommentById(Integer commentId) throws Exception {
+    public Comment findCommentById(Integer commentId) throws CommentException {
 
         Optional<Comment> opt = commentRepository.findById(commentId);
 
         if(opt.isEmpty()) {
-            throw new Exception("Comment doesn't exist!");
+            throw new CommentException("Comment doesn't exist!");
         }
         return opt.get();
     }
 
     @Override
-    public List<Comment> getAllComments() throws Exception {
+    public List<Comment> getAllComments() throws CommentException {
         return commentRepository.findAll();
     }
 

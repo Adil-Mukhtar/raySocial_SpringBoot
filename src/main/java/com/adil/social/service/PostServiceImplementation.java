@@ -1,5 +1,7 @@
 package com.adil.social.service;
 
+import com.adil.social.exceptions.PostException;
+import com.adil.social.exceptions.UserException;
 import com.adil.social.models.Post;
 import com.adil.social.repository.PostRepository;
 import com.adil.social.repository.UserRepository;
@@ -24,7 +26,7 @@ public class PostServiceImplementation implements PostService {
     UserRepository userRepository;
 
     @Override
-    public Post createNewPost(Post post, Integer userId) throws Exception {
+    public Post createNewPost(Post post, Integer userId) throws PostException, UserException {
 
         User user = userService.findUserById(userId);
         Post newPost = new Post();
@@ -37,11 +39,11 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public String DeletePost(Integer postId, Integer userId) throws Exception {
+    public String DeletePost(Integer postId, Integer userId) throws PostException, UserException {
         Post post = findPostById(postId);
         User user = userService.findUserById(userId);
         if(post.getUser().getId() != user.getId()){
-            throw new Exception("You can't delete someone else's post");
+            throw new PostException("You can't delete someone else's post");
         }
         postRepository.delete(post);
         return "Post deleted successfully!";
@@ -53,10 +55,10 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Post findPostById(Integer postId) throws Exception {
+    public Post findPostById(Integer postId) throws PostException {
         Optional<Post> opt = postRepository.findById(postId);
         if(opt.isEmpty()){
-            throw new Exception("Post not found with id: " + postId);
+            throw new PostException("Post not found with id: " + postId);
         }
         return opt.get();
 
@@ -68,7 +70,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Post savedPost(Integer postId, Integer userId) throws Exception {
+    public Post savedPost(Integer postId, Integer userId) throws PostException, UserException {
         Post post = findPostById(postId);
         User user = userService.findUserById(userId);
 
@@ -83,7 +85,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Post likePost(Integer postId, Integer userId) throws Exception {
+    public Post likePost(Integer postId, Integer userId) throws PostException, UserException {
 
         Post post = findPostById(postId);
         User user = userService.findUserById(userId);
